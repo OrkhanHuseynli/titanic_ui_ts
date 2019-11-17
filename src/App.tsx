@@ -9,12 +9,6 @@ import logo from './logo.svg';
 import './App.css';
 import MainContainer from "./core/MainContainer";
 
-const dropzoneStyle = {
-    width  : "100%",
-    height : "20%",
-    border : "1px solid #e0e0e0"
-};
-
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         root: {
@@ -29,7 +23,8 @@ const useStyles = makeStyles((theme: Theme) =>
             padding: theme.spacing(2),
             textAlign: 'center',
             color: theme.palette.text.primary,
-            border : "1px solid #e0e0e0"
+            border : '1px solid #e0e0e0',
+            maxWidth: '350px'
         },
         button: {
             margin: theme.spacing(1),

@@ -23,6 +23,7 @@ const mockData = [
 type MainContainerState = {
     uploadStatus: boolean;
     uploadInfo: UploadInfo;
+    regressionStatus: boolean;
 }
 type UploadInfo = {
     fileName: string
@@ -30,8 +31,9 @@ type UploadInfo = {
     inputParamsCount: string
     outputParamsCount: string
 }
+
 function createData(name: string, value: string) {
-    return { name, value };
+    return {name, value};
 }
 
 const mockRows = [
@@ -40,29 +42,52 @@ const mockRows = [
     createData('# of input params', "3"),
     createData('# of output params', "1"),
 ];
-export default class MainContainer extends Component<{classes: any}, MainContainerState> {
+export default class MainContainer extends Component<{ classes: any }, MainContainerState> {
     constructor(props: any) {
         super(props);
         this.state = {
             uploadStatus: false,
-            uploadInfo: {fileName: "", dataSize: "", inputParamsCount: "", outputParamsCount: ""}
+            uploadInfo: {fileName: "", dataSize: "", inputParamsCount: "", outputParamsCount: ""},
+            regressionStatus: false
         };
         this.getUploadStatus = this.getUploadStatus.bind(this);
+        this.displayDataPreviewSection = this.displayDataPreviewSection.bind(this);
+        this.displayRocCurve = this.displayRocCurve.bind(this);
+        this.onStartClick = this.onStartClick.bind(this);
     }
 
 
-    getUploadStatus = (status: boolean):void => {
+    getUploadStatus = (status: boolean): void => {
         console.debug("Upload status: " + this.state.uploadStatus)
         this.setState({uploadStatus: status})
     };
 
     displayDataPreviewSection = (): JSX.Element => {
-            if (this.state.uploadStatus){
-                return <DataTable dataRows={mockRows} />
-            }
-        return <div className={this.props.classes.dataPreview}><Typography color={"textSecondary"}>No data provided</Typography></div>
-        };
+        if (this.state.uploadStatus) {
+            return <DataTable dataRows={mockRows}/>
+        }
+        return <div className={this.props.classes.dataPreview}><Typography color={"textSecondary"}>No data
+            provided</Typography></div>
+    };
 
+    displayRocCurve = (): JSX.Element => {
+        if (this.state.regressionStatus) {
+            return (<div className={this.props.classes.paper}>
+                <LineChart data={mockData} width={width} height={height}/>
+            </div>);
+        }
+        return (
+            <Grid item xs={4}>
+                <div className={this.props.classes.dataPreview}>
+                    <Typography color={"textSecondary"}>No data provided</Typography>
+                </div>
+            </Grid>);
+    };
+
+    onStartClick = (): void => {
+        let success = true;
+        this.setState({regressionStatus: success})
+    };
 
     render() {
         return (
@@ -74,14 +99,15 @@ export default class MainContainer extends Component<{classes: any}, MainContain
                         </div>
                     </Grid>
                     <Grid item xs={12}>
-                        <div className={this.props.classes.paper}><DropZone getUploadStatus={this.getUploadStatus}/></div>
+                        <div className={this.props.classes.paper}><DropZone getUploadStatus={this.getUploadStatus}/>
+                        </div>
                     </Grid>
                     <Grid item xs={12}>
                         <div className={this.props.classes.paper}>
                             <Typography variant="h5"> 2. Data preview</Typography>
                         </div>
                     </Grid>
-                    <Grid item xs={12} container  direction="row" justify="center" alignItems="center">
+                    <Grid item xs={12} container direction="row" justify="center" alignItems="center">
                         <Grid item xs={4}>
                             {this.displayDataPreviewSection()}
                         </Grid>
@@ -95,7 +121,8 @@ export default class MainContainer extends Component<{classes: any}, MainContain
                           direction="row"
                           justify="center"
                           alignItems="center">
-                        <Button variant="contained" color="primary" className={this.props.classes.button} disabled={!this.state.uploadStatus} >
+                        <Button variant="contained" color="primary" className={this.props.classes.button}
+                                disabled={!this.state.uploadStatus} onClick={this.onStartClick}>
                             Start
                         </Button>
                     </Grid>
@@ -107,10 +134,9 @@ export default class MainContainer extends Component<{classes: any}, MainContain
                             <Typography variant="h5"> 4. ROC curve </Typography>
                         </div>
                     </Grid>
-                    <Grid item xs={12}>
-                        <div className={this.props.classes.paper}>
-                            <LineChart data={mockData} width={width} height={height}/>
-                        </div>
+                    <Grid item xs={12} container direction="row"
+                          justify="center" alignItems="center">
+                        {this.displayRocCurve()}
                     </Grid>
                 </Grid>
             </div>);
