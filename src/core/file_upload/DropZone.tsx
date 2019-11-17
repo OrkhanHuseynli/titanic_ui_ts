@@ -13,8 +13,11 @@ const dropzoneStyle = {
 type DropZoneState = {
     dropAreaMessage: any
 }
+type DropZoneProps = {
+    getUploadStatus: (status: boolean) => void
+}
 
-export class DropZone extends Component<{}, DropZoneState> {
+export class DropZone extends Component<DropZoneProps, DropZoneState> {
 
     constructor(props: any) {
         super(props);
@@ -28,9 +31,9 @@ export class DropZone extends Component<{}, DropZoneState> {
     }
 
     onDrop = <T extends File>(acceptedFiles: T[]): void => {
-        if (acceptedFiles.length == 0){
+        if (acceptedFiles.length === 0){
             console.error(`${DropZone.name} : Failed to load file!`);
-            return
+            return;
         }
         let formData = new FormData();
         let fileName =  acceptedFiles[0].name;
@@ -53,9 +56,11 @@ export class DropZone extends Component<{}, DropZoneState> {
     }
     onDropAccepted(fileName:string): void{
         this.setState({dropAreaMessage:  <Typography color="primary">The file upload was successful : {fileName}</Typography>});
+        this.props.getUploadStatus(true);
     };
     onDropRejected(): void{
         this.setState({dropAreaMessage:  <Typography color="error">The file upload was unsuccessful</Typography>});
+        this.props.getUploadStatus(false);
     };
 
     render(){

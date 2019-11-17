@@ -2,16 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="51f9bfe0-87ac-48df-9507-870b1035f19c" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/core/table/DataTable.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/core/MainContainer.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/core/file_upload/DropZone.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/file_upload/DropZone.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/file_upload/FileSelector.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/file_upload/FileSelector.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/roc_curve/RocCurve.test.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/curve/RocCurve.test.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/roc_curve/RocCurve.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/curve/RocCurve.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/utils/RestClient.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/utils/RestClient.tsx" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -177,7 +171,7 @@
       <updated>1573758924768</updated>
       <workItem from="1573758926265" duration="32524000" />
       <workItem from="1573914086876" duration="9370000" />
-      <workItem from="1573981348646" duration="5734000" />
+      <workItem from="1573981348646" duration="9672000" />
     </task>
     <servers />
   </component>
