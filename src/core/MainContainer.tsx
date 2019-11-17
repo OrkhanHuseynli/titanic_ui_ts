@@ -22,23 +22,37 @@ const mockData = [
 
 type MainContainerState = {
     uploadStatus: boolean;
+    uploadInfo: UploadInfo;
+}
+type UploadInfo = {
+    fileName: string
+    dataSize: string
+    inputParamsCount: string
+    outputParamsCount: string
 }
 
 export default class MainContainer extends Component<{classes: any}, MainContainerState> {
     constructor(props: any) {
         super(props);
         this.state = {
-            uploadStatus: false
+            uploadStatus: false,
+            uploadInfo: {fileName: "", dataSize: "", inputParamsCount: "", outputParamsCount: ""}
         };
         this.getUploadStatus = this.getUploadStatus.bind(this);
     }
 
 
     getUploadStatus = (status: boolean):void => {
-        console.log("Upload status before " + this.state.uploadStatus)
+        console.debug("Upload status: " + this.state.uploadStatus)
         this.setState({uploadStatus: status})
-        console.log("Upload status changed " + this.state.uploadStatus)
     };
+
+    displayDataPreviewSection = (): JSX.Element => {
+            if (this.state.uploadStatus){
+                return <DataTable/>
+            }
+        return <div className={this.props.classes.dataPreview}><Typography color={"textSecondary"}>No data provided</Typography></div>
+        };
 
 
     render() {
@@ -60,7 +74,7 @@ export default class MainContainer extends Component<{classes: any}, MainContain
                     </Grid>
                     <Grid item xs={12} container  direction="row" justify="center" alignItems="center">
                         <Grid item xs={4}>
-                            <DataTable/>
+                            {this.displayDataPreviewSection()}
                         </Grid>
                     </Grid>
                     <Grid item xs={12}>

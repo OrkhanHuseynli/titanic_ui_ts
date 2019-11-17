@@ -29,7 +29,7 @@ const mockRows = [
     createData('# of output params', "1"),
 ];
 
-export default function DataTable() {
+const DataTable:React.FC = () => {
     const classes = useStyles();
 
     return (
@@ -55,3 +55,5 @@ export default function DataTable() {
         </Paper>
     );
 }
+
+export default DataTable;

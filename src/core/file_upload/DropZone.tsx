@@ -2,13 +2,6 @@ import React, {Component, useCallback} from 'react';
 import  Dropzone,  {DropEvent} from 'react-dropzone';
 import RestClient from "../utils/RestClient";
 import {Icon, Typography} from '@material-ui/core';
-import { AttachFile } from '@material-ui/icons';
-
-const dropzoneStyle = {
-    width  : "100%",
-    height : "20%",
-    border : "1px solid black"
-};
 
 type DropZoneState = {
     dropAreaMessage: any
