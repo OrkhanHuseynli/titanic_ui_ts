@@ -18,18 +18,15 @@ const useStyles = makeStyles({
     },
 });
 
-function createData(name: string, value: string) {
-    return { name, value };
+type DataTableProps = {
+    dataRows: DataTableRow[]
 }
 
-const mockRows = [
-    createData('File name', "titanic.csv"),
-    createData('Data size', "45"),
-    createData('# of input params', "3"),
-    createData('# of output params', "1"),
-];
-
-const DataTable:React.FC = () => {
+type DataTableRow = {
+    name: string
+    value: string
+}
+const DataTable:React.FC<DataTableProps> = (props: DataTableProps) => {
     const classes = useStyles();
 
     return (
@@ -42,7 +39,7 @@ const DataTable:React.FC = () => {
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {mockRows.map(row => (
+                    {props.dataRows.map(row => (
                         <TableRow key={row.name}>
                             <TableCell component="th" scope="row">
                                 {row.name}

@@ -30,7 +30,16 @@ type UploadInfo = {
     inputParamsCount: string
     outputParamsCount: string
 }
+function createData(name: string, value: string) {
+    return { name, value };
+}
 
+const mockRows = [
+    createData('File name', "titanic.csv"),
+    createData('Data size', "45"),
+    createData('# of input params', "3"),
+    createData('# of output params', "1"),
+];
 export default class MainContainer extends Component<{classes: any}, MainContainerState> {
     constructor(props: any) {
         super(props);
@@ -49,7 +58,7 @@ export default class MainContainer extends Component<{classes: any}, MainContain
 
     displayDataPreviewSection = (): JSX.Element => {
             if (this.state.uploadStatus){
-                return <DataTable/>
+                return <DataTable dataRows={mockRows} />
             }
         return <div className={this.props.classes.dataPreview}><Typography color={"textSecondary"}>No data provided</Typography></div>
         };
