@@ -2,12 +2,18 @@ import React, {Component, useCallback} from 'react';
 import  Dropzone,  {DropEvent} from 'react-dropzone';
 import RestClient from "../utils/RestClient";
 import {Icon, Typography} from '@material-ui/core';
+import {FileData} from "../CoreTypes";
 
 type DropZoneState = {
     dropAreaMessage: any
 }
 type DropZoneProps = {
-    getUploadStatus: (status: boolean) => void
+    getUploadStatus: (status: boolean,  data: FileData) => void
+}
+
+type SuccessFullDropResponse = {
+    status: number
+    data: FileData
 }
 
 export class DropZone extends Component<DropZoneProps, DropZoneState> {
@@ -32,14 +38,14 @@ export class DropZone extends Component<DropZoneProps, DropZoneState> {
         let fileName =  acceptedFiles[0].name;
         formData.set('filearg', acceptedFiles[0], fileName);
         let promise = RestClient.sendFormData("http://localhost:8888/uploads", formData,  new Headers());
-        promise.then((res)=>{
+        promise.then((res:SuccessFullDropResponse)=>{
             if (res.status !== 200){
                 console.error("Upload has failed");
                 console.log(res);
                 this.onDropRejected()
             } else {
-                console.log(`Successful upload of ${acceptedFiles[0].name}`);
-                this.onDropAccepted(fileName)
+                console.log(`Successful upload of ${fileName}`);
+                this.onDropAccepted(fileName, res.data)
             }
         })
     };
@@ -47,13 +53,15 @@ export class DropZone extends Component<DropZoneProps, DropZoneState> {
     getDropAreaMessage(){
         return this.state.dropAreaMessage
     }
-    onDropAccepted(fileName:string): void{
+
+    onDropAccepted(fileName:string, data: FileData): void{
         this.setState({dropAreaMessage:  <Typography color="primary">The file upload was successful : {fileName}</Typography>});
-        this.props.getUploadStatus(true);
+        this.props.getUploadStatus(true, data);
     };
+
     onDropRejected(): void{
         this.setState({dropAreaMessage:  <Typography color="error">The file upload was unsuccessful</Typography>});
-        this.props.getUploadStatus(false);
+        this.props.getUploadStatus(false,  {fileName: "", dataSize: "", inputParamsCount: "", outputParamsCount: ""});
     };
 
     render(){

@@ -4,8 +4,7 @@ import {Button, createStyles, Grid, makeStyles, Theme, Typography} from "@materi
 import {DropZone} from "./file_upload/DropZone";
 import DataTable from "./table/DataTable";
 import {LineChart} from "./d3charts/d3charts";
-import {isBoolean} from "util";
-
+import {FileData} from "./CoreTypes";
 
 const width = 500, height = 350, margin = 20;
 const mockData = [
@@ -21,53 +20,56 @@ const mockData = [
 ];
 
 type MainContainerState = {
-    uploadStatus: boolean;
-    uploadInfo: UploadInfo;
-    regressionStatus: boolean;
-}
-type UploadInfo = {
-    fileName: string
-    dataSize: string
-    inputParamsCount: string
-    outputParamsCount: string
+    uploadStatus: boolean
+    fileData: FileData
+    regressionStatus: boolean
 }
 
 function createData(name: string, value: string) {
     return {name, value};
 }
 
-const mockRows = [
-    createData('File name', "titanic.csv"),
-    createData('Data size', "45"),
-    createData('# of input params', "3"),
-    createData('# of output params', "1"),
-];
 export default class MainContainer extends Component<{ classes: any }, MainContainerState> {
     constructor(props: any) {
         super(props);
         this.state = {
             uploadStatus: false,
-            uploadInfo: {fileName: "", dataSize: "", inputParamsCount: "", outputParamsCount: ""},
-            regressionStatus: false
+            regressionStatus: false,
+            fileData: {fileName: "", dataSize: "", inputParamsCount: "", outputParamsCount: ""},
         };
         this.getUploadStatus = this.getUploadStatus.bind(this);
         this.displayDataPreviewSection = this.displayDataPreviewSection.bind(this);
+        this.displayTrainModelSection = this.displayTrainModelSection.bind(this);
         this.displayRocCurve = this.displayRocCurve.bind(this);
         this.onStartClick = this.onStartClick.bind(this);
     }
 
 
-    getUploadStatus = (status: boolean): void => {
+    getUploadStatus = (status: boolean, data: FileData): void => {
         console.debug("Upload status: " + this.state.uploadStatus)
-        this.setState({uploadStatus: status})
+        this.setState({uploadStatus: status, fileData: {...data}})
     };
 
     displayDataPreviewSection = (): JSX.Element => {
         if (this.state.uploadStatus) {
-            return <DataTable dataRows={mockRows}/>
+           let  tableRows = [
+                createData('File name', this.state.fileData.fileName),
+                createData('Data size',  this.state.fileData.dataSize),
+            ];
+
+            return <DataTable dataRows={tableRows}/>
         }
         return <div className={this.props.classes.dataPreview}><Typography color={"textSecondary"}>No data
             provided</Typography></div>
+    };
+
+
+    displayTrainModelSection = (): JSX.Element => {
+        return (
+            <div>
+                <Button variant="contained" color="primary" className={this.props.classes.button}
+                            disabled={!this.state.uploadStatus} onClick={this.onStartClick}>Start</Button>
+            </div>)
     };
 
     displayRocCurve = (): JSX.Element => {
@@ -121,10 +123,7 @@ export default class MainContainer extends Component<{ classes: any }, MainConta
                           direction="row"
                           justify="center"
                           alignItems="center">
-                        <Button variant="contained" color="primary" className={this.props.classes.button}
-                                disabled={!this.state.uploadStatus} onClick={this.onStartClick}>
-                            Start
-                        </Button>
+                        {this.displayTrainModelSection()}
                     </Grid>
                     <Grid item xs={12} spacing={3} container
                           direction="row"
