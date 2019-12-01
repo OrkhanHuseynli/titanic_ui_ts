@@ -4,7 +4,12 @@ const ENDPOINT_TRAIN = "/api/v1/train";
 
 export default class RestClient {
     static post = (url: string, body: any, config: AxiosRequestConfig) : Promise<AxiosResponse> => {
-        return axios.post(url, body, config);
+        return axios({
+            method: 'post',
+            url: url,
+            headers: {...config.headers},
+            params: {...config.params}
+        });
     };
 
     static get = (url: string, config: AxiosRequestConfig)  : Promise<AxiosResponse> => {

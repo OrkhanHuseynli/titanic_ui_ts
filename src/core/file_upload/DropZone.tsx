@@ -37,7 +37,7 @@ export class DropZone extends Component<DropZoneProps, DropZoneState> {
         let formData = new FormData();
         let fileName =  acceptedFiles[0].name;
         formData.set('filearg', acceptedFiles[0], fileName);
-        let promise = RestClient.sendFormData("http://localhost:8888/uploads", formData,  new Headers());
+        let promise = RestClient.sendFormData(`http://localhost:8888${RestClient.ENDPOINT_UPLOAD}`, formData,  new Headers());
         promise.then((res:SuccessFullDropResponse)=>{
             if (res.status !== 200){
                 console.error("Upload has failed");

@@ -5,6 +5,9 @@ import {DropZone} from "./file_upload/DropZone";
 import DataTable from "./table/DataTable";
 import {LineChart} from "./d3charts/d3charts";
 import {FileData} from "./CoreTypes";
+import RestClient from "./utils/RestClient";
+import { AxiosResponse } from 'axios';
+import {findRenderedComponentWithType} from "react-dom/test-utils";
 
 const width = 500, height = 350, margin = 20;
 const mockData = [
@@ -23,11 +26,30 @@ type MainContainerState = {
     uploadStatus: boolean
     fileData: FileData
     regressionStatus: boolean
+    rocPointList: RocPointList
+}
+type RocPointArray = [number, number]
+type RocPoint = { a: number, b: number}
+type RocList =  Array<RocPointArray>
+type RocPointList =  Array<RocPoint>
+type RocData = {
+    roc_list: RocList
+    conf_matrix_list: Array<Array<number>>
 }
 
-function createData(name: string, value: string) {
+let rocData: RocData = {roc_list: [], conf_matrix_list: []};
+
+const createData = (name: string, value: string) => {
     return {name, value};
-}
+};
+
+const transformRocListToRocPointList = (rocList: RocList): RocPointList => {
+    let rocPointList : RocPointList = [];
+    rocList.forEach(rocPointArray=> {
+        rocPointList.push({a: rocPointArray[0], b: rocPointArray[1]});
+    });
+    return rocPointList;
+};
 
 export default class MainContainer extends Component<{ classes: any }, MainContainerState> {
     constructor(props: any) {
@@ -36,6 +58,7 @@ export default class MainContainer extends Component<{ classes: any }, MainConta
             uploadStatus: false,
             regressionStatus: false,
             fileData: {fileName: "", dataSize: "", inputParamsCount: "", outputParamsCount: ""},
+            rocPointList: []
         };
         this.getUploadStatus = this.getUploadStatus.bind(this);
         this.displayDataPreviewSection = this.displayDataPreviewSection.bind(this);
@@ -72,10 +95,17 @@ export default class MainContainer extends Component<{ classes: any }, MainConta
             </div>)
     };
 
+    onStartClick = (): void => {
+        console.log("START TRAINING");
+        this.queryRocData();
+    };
+
+
     displayRocCurve = (): JSX.Element => {
         if (this.state.regressionStatus) {
+
             return (<div className={this.props.classes.paper}>
-                <LineChart data={mockData} width={width} height={height}/>
+                <LineChart data={this.state.rocPointList} width={width} height={height}/>
             </div>);
         }
         return (
@@ -86,9 +116,17 @@ export default class MainContainer extends Component<{ classes: any }, MainConta
             </Grid>);
     };
 
-    onStartClick = (): void => {
-        let success = true;
-        this.setState({regressionStatus: success})
+    async queryRocData(){
+        let rocData: RocData = {roc_list: [], conf_matrix_list: []};
+        let promoise: Promise<AxiosResponse<RocData>> = RestClient.post(`http://localhost:8888${RestClient.ENDPOINT_TRAIN}`, {},
+            {headers: {'Content-Type': 'application/json'}, params: {filename: this.state.fileData.fileName}});
+        await promoise.then((res: AxiosResponse<RocData>) => {
+            console.log("ROC: getting roc points");
+            rocData.roc_list = res.data.roc_list;
+            rocData.conf_matrix_list = res.data.conf_matrix_list;
+        });
+        let rocPointList: RocPointList = transformRocListToRocPointList(rocData.roc_list);
+        this.setState({regressionStatus: rocData.roc_list.length > 0, rocPointList: rocPointList})
     };
 
     render() {
