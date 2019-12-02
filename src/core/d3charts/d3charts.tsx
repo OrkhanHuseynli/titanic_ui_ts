@@ -9,6 +9,7 @@ type CurveProps = {
     height: any
     rocPointList: RocPointList
     confMatrixObjList: ConfusionMatrixObjectList
+    thresholdList: number[]
 }
 type CurveState = {
     tooltip: Tooltip
@@ -19,16 +20,17 @@ type Tooltip = {
     y: number
     display: string
     width: number
+    threshold: number
     confusionMatrix: ConfusionMatrix
 }
 
-type CircleData = { cx: number, cy: number, confusionMatrix: ConfusionMatrix }
+type CircleData = { cx: number, cy: number, threshold: number, confusionMatrix: ConfusionMatrix }
 
-const getCircleData = (rocPoint: RocPoint, confusionMatrix: ConfusionMatrix): CircleData => {
-    return {cx: rocPoint.b, cy: rocPoint.a, confusionMatrix: confusionMatrix}
+const getCircleData = (rocPoint: RocPoint, threshold: number, confusionMatrix: ConfusionMatrix): CircleData => {
+    return {cx: rocPoint.b, cy: rocPoint.a, threshold:threshold, confusionMatrix: confusionMatrix}
 };
 
-const getCircleDataList = (rocPointList: RocPointList, confusionMatrixObjList: ConfusionMatrixObjectList): Array<CircleData> => {
+const getCircleDataList = (rocPointList: RocPointList, thresholdList: number[], confusionMatrixObjList: ConfusionMatrixObjectList): Array<CircleData> => {
     console.info("getCircleDataList");
     if (rocPointList.length !== confusionMatrixObjList.length) {
         let msg = "Length of RocPointList and ConfusionMatrixObjectList objects must be equal!";
@@ -38,7 +40,7 @@ const getCircleDataList = (rocPointList: RocPointList, confusionMatrixObjList: C
 
     let circleDataList: Array<CircleData> = [];
     for (let i = 0; i < rocPointList.length; i++) {
-        circleDataList.push(getCircleData(rocPointList[i], confusionMatrixObjList[i]))
+        circleDataList.push(getCircleData(rocPointList[i], thresholdList[i], confusionMatrixObjList[i]))
     }
     return circleDataList;
 };
@@ -48,38 +50,31 @@ export class LineChart extends Component<CurveProps, CurveState> {
     constructor(props: CurveProps) {
         super(props);
         this.state = {
-            tooltip: {x: 0, y: 0, display: "none", width: 35, confusionMatrix: {TP: 0, TN: 0, FP: 0, FN: 0}}
+            tooltip: {x: 0, y: 0, display: "none", width: 35, threshold: 0, confusionMatrix: {TP: 0, TN: 0, FP: 0, FN: 0}}
         }
     }
 
-    onMouseOverEv = (e: any, x: number, y: number, confusionMatrix: ConfusionMatrix) => {
-        // console.log(x);
-        // console.log(e);
-        // d3.select(svgElem)
-        //     .append("circle").attr("class", "testy")
-        //     // .attr("cx", (d: any)=> {return d.a})
-        //     // .attr("cy", (d: any)=> {return d.b})
-        //     .attr("r", 15).on("mouseover", ()=>{console.log("MOUSOVEER");});
+    onMouseOverEv = (e: any, x: number, y: number, threshold: number, confusionMatrix: ConfusionMatrix) => {
         let tooltip: Tooltip = {
             x: x,
             y: y,
             display: "true",
             width: 35,
+            threshold: threshold,
             confusionMatrix: {TP: confusionMatrix.TP, TN: confusionMatrix.TN, FP: confusionMatrix.FP, FN: confusionMatrix.FN}
         };
         this.setState({tooltip: {...tooltip}})
-        // console.log("this state", JSON.stringify(this.state.tooltip));
     };
 
     onMouseOutEv = (e: any) => {
-        let tooltip: Tooltip = {x: 0, y: 0, display: "none", width: 35, confusionMatrix: {TP: 0, TN: 0, FP: 0, FN: 0}};
+        let tooltip: Tooltip = {x: 0, y: 0, display: "none", width: 35, threshold: 0, confusionMatrix: {TP: 0, TN: 0, FP: 0, FN: 0}};
         this.setState({tooltip: {...tooltip}})
     };
 
     render() {
 
         const margin = 20;
-        const {width, height, rocPointList, confMatrixObjList} = this.props;
+        const {width, height, rocPointList, confMatrixObjList, thresholdList} = this.props;
 
         const h = height - 2 * margin, w = width - 2 * margin;
 
@@ -131,10 +126,7 @@ export class LineChart extends Component<CurveProps, CurveState> {
                     : null
             ));
 
-
-        // let svg = d3.select("svg").append("g").attr("transform", "translate(" + 50 + "," + 50 + ")");
-        let circlesData: Array<CircleData> = getCircleDataList(rocPointList, confMatrixObjList);
-
+        let circlesData: Array<CircleData> = getCircleDataList(rocPointList, thresholdList, confMatrixObjList);
 
         let circlesSVG = <g>
             {
@@ -142,7 +134,7 @@ export class LineChart extends Component<CurveProps, CurveState> {
                     // @ts-ignore
                     return <g>
                         <circle className={"circle"} key={d.cx} cx={x(d.cx)} cy={y(d.cy)} r={6} onMouseOver={(e: any) => {
-                            this.onMouseOverEv(e, d.cx, d.cy, d.confusionMatrix)
+                            this.onMouseOverEv(e, d.cx, d.cy, d.threshold, d.confusionMatrix)
                         }} onMouseOut={this.onMouseOutEv}/>
                     </g>
                 })
@@ -153,9 +145,16 @@ export class LineChart extends Component<CurveProps, CurveState> {
         let tulTextDistX = 0.02;
         let tulAxisDistY = 0.085;
         let tulTextDistY = 0.05;
+        let thresholdDistY = 0.07;
 
 
         let tooltipSVG = <g>
+            <rect className={"tooltip-thresh"} x={x(this.state.tooltip.x)} y={y(this.state.tooltip.y + thresholdDistY)}
+                  display={this.state.tooltip.display} width={this.state.tooltip.width*2} height="25"/>
+            <text className={"tooltip-text"} x={x(this.state.tooltip.x + tulTextDistX-0.01)}
+                  y={y(this.state.tooltip.y + thresholdDistY - tulTextDistY)}
+                  display={this.state.tooltip.display}>thrld : {this.state.tooltip.threshold}
+            </text>
             <rect className={"tooltip-blue"} x={x(this.state.tooltip.x)} y={y(this.state.tooltip.y)}
                   display={this.state.tooltip.display} width={this.state.tooltip.width} height="25"/>
             <text className={"tooltip-text"} x={x(this.state.tooltip.x + tulTextDistX)}
@@ -164,21 +163,21 @@ export class LineChart extends Component<CurveProps, CurveState> {
             </text>
             <rect className={"tooltip-red"} x={x(this.state.tooltip.x + tulAxisDistX)} y={y(this.state.tooltip.y)}
                   display={this.state.tooltip.display} width={this.state.tooltip.width} height="25"/>
-            <text fontFamily={"Verdana"} fontSize={"12"} fill={"black"}
+            <text className={"tooltip-text"} fontFamily={"Verdana"} fontSize={"12"} fill={"black"}
                   x={x(this.state.tooltip.x + tulAxisDistX + tulTextDistX)}
                   y={y(this.state.tooltip.y - tulTextDistY)}
                   display={this.state.tooltip.display}>{this.state.tooltip.confusionMatrix.TN}
             </text>
             <rect className={"tooltip-red"} x={x(this.state.tooltip.x)} y={y(this.state.tooltip.y - tulAxisDistY)}
                   display={this.state.tooltip.display} width={this.state.tooltip.width} height="25"/>
-            <text fontFamily={"Verdana"} fontSize={"12"} fill={"black"} x={x(this.state.tooltip.x + tulTextDistX)}
+            <text  className={"tooltip-text"} fontFamily={"Verdana"} fontSize={"12"} fill={"black"} x={x(this.state.tooltip.x + tulTextDistX)}
                   y={y(this.state.tooltip.y - tulAxisDistY - tulTextDistY)}
                   display={this.state.tooltip.display}>{this.state.tooltip.confusionMatrix.FN}
             </text>
             <rect className={"tooltip-blue"} x={x(this.state.tooltip.x + tulAxisDistX)}
                   y={y(this.state.tooltip.y - tulAxisDistY)}
                   display={this.state.tooltip.display} width={this.state.tooltip.width} height="25"/>
-            <text fontFamily={"Verdana"} fontSize={"12"} fill={"black"}
+            <text className={"tooltip-text"} fontFamily={"Verdana"} fontSize={"12"} fill={"black"}
                   x={x(this.state.tooltip.x + tulAxisDistX + tulTextDistX)}
                   y={y(this.state.tooltip.y - tulAxisDistY - tulTextDistY)}
                   display={this.state.tooltip.display}>{this.state.tooltip.confusionMatrix.FP}
@@ -190,7 +189,6 @@ export class LineChart extends Component<CurveProps, CurveState> {
                 <svg width={width} height={height}>
                     <line className="axis" x1={margin} x2={w} y1={h} y2={h}/>
                     <line className="axis" x1={margin} x2={margin} y1={margin} y2={h}/>
-                    {tooltipSVG}
                     // @ts-ignore
                     <path className={"curve-line"} d={line(rocPointList)}/>
                     // @ts-ignore
@@ -202,6 +200,7 @@ export class LineChart extends Component<CurveProps, CurveState> {
                         {yTicks}
                     </g>
                     {circlesSVG}
+                    {tooltipSVG}
                 </svg>
             </div>
         )

@@ -16,6 +16,7 @@ type MainContainerState = {
     regressionStatus: boolean
     rocPointList: RocPointList,
     confMatrixObjList: ConfusionMatrixObjectList
+    thresholdList: number[]
 }
 export type RocPoint = { a: number, b: number}
 export type RocPointList =  Array<RocPoint>
@@ -30,8 +31,9 @@ export type ConfusionMatrixObjectList = Array<ConfusionMatrix>
 
 type ConfusionMatrixList = Array<[[number, number], [number, number]]>
 type RocData = {
-    roc_list: RocList
-    conf_matrix_list: ConfusionMatrixList
+    rocList: RocList
+    confMatrixList: ConfusionMatrixList,
+    thresholdList: number[]
 }
 
 const createData = (name: string, value: string) => {
@@ -69,7 +71,8 @@ export default class MainContainer extends Component<{ classes: any }, MainConta
             regressionStatus: false,
             fileData: {fileName: "", dataSize: "", inputParamsCount: "", outputParamsCount: ""},
             rocPointList: [],
-            confMatrixObjList: []
+            confMatrixObjList: [],
+            thresholdList: []
         };
         this.getUploadStatus = this.getUploadStatus.bind(this);
         this.displayDataPreviewSection = this.displayDataPreviewSection.bind(this);
@@ -82,6 +85,9 @@ export default class MainContainer extends Component<{ classes: any }, MainConta
     getUploadStatus = (status: boolean, data: FileData): void => {
         console.debug("Upload status: " + this.state.uploadStatus)
         this.setState({uploadStatus: status, fileData: {...data}})
+        if (!status) {
+            this.setState({regressionStatus: status});
+        }
     };
 
     displayDataPreviewSection = (): JSX.Element => {
@@ -116,7 +122,7 @@ export default class MainContainer extends Component<{ classes: any }, MainConta
         if (this.state.regressionStatus) {
 
             return (<div className={this.props.classes.paper}>
-                <LineChart rocPointList={this.state.rocPointList} confMatrixObjList={this.state.confMatrixObjList} width={width} height={height}/>
+                <LineChart rocPointList={this.state.rocPointList} confMatrixObjList={this.state.confMatrixObjList} thresholdList={this.state.thresholdList} width={width} height={height}/>
             </div>);
         }
         return (
@@ -128,18 +134,18 @@ export default class MainContainer extends Component<{ classes: any }, MainConta
     };
 
     async queryRocData(){
-        let rocData: RocData = {roc_list: [], conf_matrix_list: []};
+        let rocData: RocData = {rocList: [], confMatrixList: [], thresholdList: []};
         let promoise: Promise<AxiosResponse<RocData>> = RestClient.post(`http://localhost:8888${RestClient.ENDPOINT_TRAIN}`, {},
             {headers: {'Content-Type': 'application/json'}, params: {filename: this.state.fileData.fileName}});
         await promoise.then((res: AxiosResponse<RocData>) => {
-            console.log("ROC: getting roc points");
-            rocData.roc_list = res.data.roc_list;
-            rocData.conf_matrix_list = res.data.conf_matrix_list;
+            console.info("ROC: getting roc points");
+            rocData.rocList = res.data.rocList;
+            rocData.confMatrixList = res.data.confMatrixList;
+            rocData.thresholdList = res.data.thresholdList
         });
-        console.log( rocData.conf_matrix_list)
-        let rocPointList: RocPointList = transformToRocPointList(rocData.roc_list);
-        let confMatrixObjList: ConfusionMatrixObjectList = transformToConfusionMatrixObjectList(rocData.conf_matrix_list);
-        this.setState({regressionStatus: rocData.roc_list.length > 0, rocPointList: rocPointList, confMatrixObjList: confMatrixObjList})
+        let rocPointList: RocPointList = transformToRocPointList(rocData.rocList);
+        let confMatrixObjList: ConfusionMatrixObjectList = transformToConfusionMatrixObjectList(rocData.confMatrixList);
+        this.setState({regressionStatus: rocData.rocList.length > 0, rocPointList: rocPointList, confMatrixObjList: confMatrixObjList, thresholdList: rocData.thresholdList})
     };
 
     render() {
