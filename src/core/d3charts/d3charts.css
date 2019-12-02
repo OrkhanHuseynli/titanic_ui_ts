@@ -4,11 +4,18 @@
 }
 svg {
     fill: #000;
-    fill-opacity: 0.3;
+    fill-opacity: 0.9;
+}
+path {
+    fill: none;
+}
+path.curve-line {
+    stroke: steelblue;
+    stroke-width: 2px;
 }
 
-path {
-    stroke: steelblue;
+path.border-line {
+    stroke: #b4222e !important;
     stroke-width: 2px;
     fill: none;
 }
@@ -32,3 +39,29 @@ path {
     opacity: 0.2;
 }
 
+.circle {
+    fill : aqua;
+    stroke: #1022ff;
+}
+
+.circle:hover{
+    fill : orangered;
+    stroke: #ff6c27;
+}
+
+.tooltip-blue {
+    fill: dodgerblue;
+    background-color: dodgerblue;
+}
+
+.tooltip-red {
+    fill: red;
+    background-color: crimson;
+}
+
+.tooltip-text {
+    font-family: Verdana;
+    font-size: 12px;
+    fill-opacity: 1;
+    fill: black;
+}

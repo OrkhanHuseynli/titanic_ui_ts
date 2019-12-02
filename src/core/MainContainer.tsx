@@ -7,48 +7,58 @@ import {LineChart} from "./d3charts/d3charts";
 import {FileData} from "./CoreTypes";
 import RestClient from "./utils/RestClient";
 import { AxiosResponse } from 'axios';
-import {findRenderedComponentWithType} from "react-dom/test-utils";
 
-const width = 500, height = 350, margin = 20;
-const mockData = [
-    {a: -0.59, b: 0.49},
-    {a: 0.25, b: 0.33},
-    {a: 0.46, b: 0.27},
-    {a: 0.64, b: 0.20},
-    {a: 0.73, b: 0.17},
-    {a: 0.89, b: 0.08},
-    {a: 1.0, b: 0.0},
-    {a: 1.0, b: 0.0}
-
-];
+const width = 500, height = 350;
 
 type MainContainerState = {
     uploadStatus: boolean
     fileData: FileData
     regressionStatus: boolean
-    rocPointList: RocPointList
+    rocPointList: RocPointList,
+    confMatrixObjList: ConfusionMatrixObjectList
 }
-type RocPointArray = [number, number]
-type RocPoint = { a: number, b: number}
-type RocList =  Array<RocPointArray>
-type RocPointList =  Array<RocPoint>
+export type RocPoint = { a: number, b: number}
+export type RocPointList =  Array<RocPoint>
+type RocList =  Array<[number, number]>
+export type ConfusionMatrix = {
+    TP: number
+    TN: number
+    FP: number
+    FN: number
+}
+export type ConfusionMatrixObjectList = Array<ConfusionMatrix>
+
+type ConfusionMatrixList = Array<[[number, number], [number, number]]>
 type RocData = {
     roc_list: RocList
-    conf_matrix_list: Array<Array<number>>
+    conf_matrix_list: ConfusionMatrixList
 }
-
-let rocData: RocData = {roc_list: [], conf_matrix_list: []};
 
 const createData = (name: string, value: string) => {
     return {name, value};
 };
 
-const transformRocListToRocPointList = (rocList: RocList): RocPointList => {
+const transformToRocPointList = (rocList: RocList): RocPointList => {
+    console.log("transformToRocPointList");
     let rocPointList : RocPointList = [];
     rocList.forEach(rocPointArray=> {
         rocPointList.push({a: rocPointArray[0], b: rocPointArray[1]});
     });
     return rocPointList;
+};
+
+const transformToConfusionMatrixObjectList = (confList: ConfusionMatrixList): ConfusionMatrixObjectList => {
+    console.log("transformToConfusionMatrixObjectList");
+    let confMatrixObjectList: ConfusionMatrixObjectList  = [];
+    confList.forEach( arr => {
+        let tp = arr[0][0];
+        let fp = arr[0][1];
+        let tn = arr[1][0];
+        let fn = arr[1][1];
+        let confMatrix: ConfusionMatrix = {TP: tp, FP: fp, TN: tn, FN: fn};
+        confMatrixObjectList.push(confMatrix);
+    });
+    return confMatrixObjectList;
 };
 
 export default class MainContainer extends Component<{ classes: any }, MainContainerState> {
@@ -58,7 +68,8 @@ export default class MainContainer extends Component<{ classes: any }, MainConta
             uploadStatus: false,
             regressionStatus: false,
             fileData: {fileName: "", dataSize: "", inputParamsCount: "", outputParamsCount: ""},
-            rocPointList: []
+            rocPointList: [],
+            confMatrixObjList: []
         };
         this.getUploadStatus = this.getUploadStatus.bind(this);
         this.displayDataPreviewSection = this.displayDataPreviewSection.bind(this);
@@ -105,7 +116,7 @@ export default class MainContainer extends Component<{ classes: any }, MainConta
         if (this.state.regressionStatus) {
 
             return (<div className={this.props.classes.paper}>
-                <LineChart data={this.state.rocPointList} width={width} height={height}/>
+                <LineChart rocPointList={this.state.rocPointList} confMatrixObjList={this.state.confMatrixObjList} width={width} height={height}/>
             </div>);
         }
         return (
@@ -125,8 +136,10 @@ export default class MainContainer extends Component<{ classes: any }, MainConta
             rocData.roc_list = res.data.roc_list;
             rocData.conf_matrix_list = res.data.conf_matrix_list;
         });
-        let rocPointList: RocPointList = transformRocListToRocPointList(rocData.roc_list);
-        this.setState({regressionStatus: rocData.roc_list.length > 0, rocPointList: rocPointList})
+        console.log( rocData.conf_matrix_list)
+        let rocPointList: RocPointList = transformToRocPointList(rocData.roc_list);
+        let confMatrixObjList: ConfusionMatrixObjectList = transformToConfusionMatrixObjectList(rocData.conf_matrix_list);
+        this.setState({regressionStatus: rocData.roc_list.length > 0, rocPointList: rocPointList, confMatrixObjList: confMatrixObjList})
     };
 
     render() {

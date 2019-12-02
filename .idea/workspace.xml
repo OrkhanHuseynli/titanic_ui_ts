@@ -4,9 +4,8 @@
     <list default="true" id="51f9bfe0-87ac-48df-9507-870b1035f19c" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/core/MainContainer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/MainContainer.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/file_upload/DropZone.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/file_upload/DropZone.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/file_upload/FileSelector.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/utils/RestClient.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/utils/RestClient.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/d3charts/d3charts.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/d3charts/d3charts.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/d3charts/d3charts.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/d3charts/d3charts.tsx" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -182,7 +181,8 @@
       <workItem from="1574111019995" duration="6877000" />
       <workItem from="1574627587841" duration="638000" />
       <workItem from="1575117207320" duration="6992000" />
-      <workItem from="1575194890888" duration="5483000" />
+      <workItem from="1575194890888" duration="6218000" />
+      <workItem from="1575212566109" duration="21695000" />
     </task>
     <servers />
   </component>
