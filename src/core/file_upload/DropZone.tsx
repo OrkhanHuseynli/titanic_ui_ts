@@ -2,12 +2,18 @@ import React, {Component, useCallback} from 'react';
 import  Dropzone,  {DropEvent} from 'react-dropzone';
 import RestClient from "../utils/RestClient";
 import {Icon, Typography} from '@material-ui/core';
-import {FileData} from "../CoreTypes";
+
+export type FileData = {
+    fileName: string
+    dataSize: string
+    inputParamsCount: string
+    outputParamsCount: string
+}
 
 type DropZoneState = {
     dropAreaMessage: any
 }
-type DropZoneProps = {
+export type DropZoneProps = {
     getUploadStatus: (status: boolean,  data: FileData) => void
 }
 

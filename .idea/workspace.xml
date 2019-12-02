@@ -2,10 +2,22 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="51f9bfe0-87ac-48df-9507-870b1035f19c" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/core/file_upload/DropZone.test.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/core/table/DataTable.test.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/CoreTypes.tsx" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/core/MainContainer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/MainContainer.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/d3charts/d3charts.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/d3charts/d3charts.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/curve/RocCurve.test.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/curve/RocCurve.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/curve/__snapshots__/RocCurve.test.tsx.snap" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/d3charts/d3charts.test.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/d3charts/d3charts.test.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/core/d3charts/d3charts.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/d3charts/d3charts.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/file_upload/DropZone.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/file_upload/DropZone.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/model_build/ModelBuild.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/table/DataTable.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/table/DataTable.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/utils/RestClient.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/utils/RestClient.tsx" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -67,69 +79,56 @@
     </option>
   </component>
   <component name="RunManager" selected="npm.npm start">
-    <configuration name="buildRocCurve (2)" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
+    <configuration name="DataTable" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
       <node-interpreter value="project" />
       <node-options value="" />
       <jest-package value="$PROJECT_DIR$/node_modules/react-scripts" />
       <working-dir value="$PROJECT_DIR$" />
       <envs />
       <scope-kind value="SUITE" />
-      <test-file value="$PROJECT_DIR$/src/core/roc_curve/RocCurve.test.tsx" />
+      <test-file value="$PROJECT_DIR$/src/core/table/DataTable.test.tsx" />
       <test-names>
-        <test-name value="buildRocCurve" />
+        <test-name value="DataTable" />
       </test-names>
       <method v="2" />
     </configuration>
-    <configuration name="buildRocCurve" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
+    <configuration name="DropZone" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
       <node-interpreter value="project" />
       <node-options value="" />
       <jest-package value="$PROJECT_DIR$/node_modules/react-scripts" />
       <working-dir value="$PROJECT_DIR$" />
       <envs />
       <scope-kind value="SUITE" />
-      <test-file value="$PROJECT_DIR$/src/core/RocCurve.test.tsx" />
+      <test-file value="$PROJECT_DIR$/src/core/file_upload/DropZone.test.tsx" />
       <test-names>
-        <test-name value="buildRocCurve" />
+        <test-name value="DropZone" />
       </test-names>
       <method v="2" />
     </configuration>
-    <configuration name="d3file" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
-      <node-interpreter value="project" />
-      <node-options value="" />
-      <jest-package value="$PROJECT_DIR$/node_modules/react-scripts" />
-      <working-dir value="$PROJECT_DIR$" />
-      <envs />
-      <scope-kind value="SUITE" />
-      <test-file value="$PROJECT_DIR$/src/core/d3file.test.tsx" />
-      <test-names>
-        <test-name value="d3file" />
-      </test-names>
-      <method v="2" />
-    </configuration>
-    <configuration name="d3file.test" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
+    <configuration name="DropzZone.it matches the snapshot" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
       <node-interpreter value="project" />
       <node-options value="" />
       <jest-package value="$PROJECT_DIR$/node_modules/react-scripts" />
       <working-dir value="$PROJECT_DIR$" />
       <envs />
       <scope-kind value="TEST" />
-      <test-file value="$PROJECT_DIR$/src/core/d3file.test.tsx" />
+      <test-file value="$PROJECT_DIR$/src/core/file_upload/DropZone.test.tsx" />
       <test-names>
-        <test-name value="d3file" />
-        <test-name value="test" />
+        <test-name value="DropzZone" />
+        <test-name value="it matches the snapshot" />
       </test-names>
       <method v="2" />
     </configuration>
-    <configuration name="test" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
+    <configuration name="d3charts" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
       <node-interpreter value="project" />
       <node-options value="" />
       <jest-package value="$PROJECT_DIR$/node_modules/react-scripts" />
       <working-dir value="$PROJECT_DIR$" />
       <envs />
-      <scope-kind value="TEST" />
-      <test-file value="$PROJECT_DIR$/src/core/d3file.test.tsx" />
+      <scope-kind value="SUITE" />
+      <test-file value="$PROJECT_DIR$/src/core/d3charts/d3charts.test.tsx" />
       <test-names>
-        <test-name value="test" />
+        <test-name value="d3charts" />
       </test-names>
       <method v="2" />
     </configuration>
@@ -146,22 +145,32 @@
       <envs />
       <method v="2" />
     </configuration>
+    <configuration name="test" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="test" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
     <list>
       <item itemvalue="JavaScript Debug.Debug Application" />
-      <item itemvalue="Jest.buildRocCurve" />
-      <item itemvalue="Jest.test" />
-      <item itemvalue="Jest.d3file" />
-      <item itemvalue="Jest.d3file.test" />
-      <item itemvalue="Jest.buildRocCurve (2)" />
       <item itemvalue="npm.npm start" />
+      <item itemvalue="Jest.d3charts" />
+      <item itemvalue="Jest.DropzZone.it matches the snapshot" />
+      <item itemvalue="Jest.DropZone" />
+      <item itemvalue="Jest.DataTable" />
+      <item itemvalue="npm.test" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Jest.buildRocCurve (2)" />
-        <item itemvalue="Jest.d3file" />
-        <item itemvalue="Jest.d3file.test" />
-        <item itemvalue="Jest.test" />
-        <item itemvalue="Jest.buildRocCurve" />
+        <item itemvalue="npm.test" />
+        <item itemvalue="Jest.DropZone" />
+        <item itemvalue="Jest.d3charts" />
+        <item itemvalue="Jest.DataTable" />
+        <item itemvalue="Jest.DropzZone.it matches the snapshot" />
       </list>
     </recent_temporary>
   </component>
@@ -182,7 +191,7 @@
       <workItem from="1574627587841" duration="638000" />
       <workItem from="1575117207320" duration="6992000" />
       <workItem from="1575194890888" duration="6218000" />
-      <workItem from="1575212566109" duration="29341000" />
+      <workItem from="1575212566109" duration="33983000" />
     </task>
     <servers />
   </component>

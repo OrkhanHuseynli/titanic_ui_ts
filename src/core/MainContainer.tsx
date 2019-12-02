@@ -1,10 +1,9 @@
 import React from 'react';
 import {Component} from "react";
-import {Button, createStyles, Grid, makeStyles, Theme, Typography} from "@material-ui/core";
-import {DropZone} from "./file_upload/DropZone";
+import {Button, Grid, Typography} from "@material-ui/core";
+import {DropZone, FileData} from "./file_upload/DropZone";
 import DataTable from "./table/DataTable";
 import {LineChart} from "./d3charts/d3charts";
-import {FileData} from "./CoreTypes";
 import RestClient from "./utils/RestClient";
 import { AxiosResponse } from 'axios';
 
@@ -41,7 +40,7 @@ const createData = (name: string, value: string) => {
 };
 
 const transformToRocPointList = (rocList: RocList): RocPointList => {
-    console.log("transformToRocPointList");
+    console.info("transformToRocPointList");
     let rocPointList : RocPointList = [];
     rocList.forEach(rocPointArray=> {
         rocPointList.push({a: rocPointArray[0], b: rocPointArray[1]});
@@ -50,7 +49,7 @@ const transformToRocPointList = (rocList: RocList): RocPointList => {
 };
 
 const transformToConfusionMatrixObjectList = (confList: ConfusionMatrixList): ConfusionMatrixObjectList => {
-    console.log("transformToConfusionMatrixObjectList");
+    console.info("transformToConfusionMatrixObjectList");
     let confMatrixObjectList: ConfusionMatrixObjectList  = [];
     confList.forEach( arr => {
         let tp = arr[0][0];

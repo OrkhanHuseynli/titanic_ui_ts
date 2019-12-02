@@ -18,7 +18,7 @@ const useStyles = makeStyles({
     },
 });
 
-type DataTableProps = {
+export type DataTableProps = {
     dataRows: DataTableRow[]
 }
 

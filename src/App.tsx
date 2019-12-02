@@ -1,11 +1,6 @@
 import React from 'react';
 import {makeStyles, createStyles, Theme} from '@material-ui/core/styles';
-import {Typography, Button, Grid, Box} from "@material-ui/core";
-import {LineChart} from "./core/d3charts/d3charts";
-import {DropZone} from "./core/file_upload/DropZone";
-import DataTable from "./core/table/DataTable";
 import 'typeface-roboto';
-import logo from './logo.svg';
 import './App.css';
 import MainContainer from "./core/MainContainer";
 
@@ -24,7 +19,8 @@ const useStyles = makeStyles((theme: Theme) =>
             textAlign: 'center',
             color: theme.palette.text.primary,
             border : '1px solid #e0e0e0',
-            maxWidth: '350px'
+            maxWidth: '350px',
+            margin: '0 auto'
         },
         button: {
             margin: theme.spacing(1),

@@ -4,7 +4,7 @@ import {Component} from "react";
 import './d3charts.css';
 import {ConfusionMatrix, ConfusionMatrixObjectList, RocPoint, RocPointList} from "../MainContainer";
 
-type CurveProps = {
+export type CurveProps = {
     width: any
     height: any
     rocPointList: RocPointList

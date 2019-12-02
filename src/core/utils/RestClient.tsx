@@ -16,10 +16,6 @@ export default class RestClient {
         return axios.get(url, config);
     };
 
-    static delete = (url: string, body: any, config: AxiosRequestConfig)  : Promise<AxiosResponse> => {
-        return axios.delete(url, config);
-    };
-
     static sendFormData = (url: string, data: FormData, headers: Headers)  : Promise<AxiosResponse>  => {
        return  axios({
             method: 'post',
