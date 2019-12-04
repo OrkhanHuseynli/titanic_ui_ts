@@ -47,10 +47,10 @@ export class DropZone extends Component<DropZoneProps, DropZoneState> {
         promise.then((res:SuccessFullDropResponse)=>{
             if (res.status !== 200){
                 console.error("Upload has failed");
-                console.log(res);
+                console.debug(res);
                 this.onDropRejected()
             } else {
-                console.log(`Successful upload of ${fileName}`);
+                console.info(`Successful upload of ${fileName}`);
                 this.onDropAccepted(fileName, res.data)
             }
         })
