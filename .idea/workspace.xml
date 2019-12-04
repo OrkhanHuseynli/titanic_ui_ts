@@ -2,22 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="51f9bfe0-87ac-48df-9507-870b1035f19c" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/core/file_upload/DropZone.test.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/core/table/DataTable.test.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/CoreTypes.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/MainContainer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/MainContainer.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/curve/RocCurve.test.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/curve/RocCurve.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/curve/__snapshots__/RocCurve.test.tsx.snap" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/d3charts/d3charts.test.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/d3charts/d3charts.test.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/d3charts/d3charts.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/d3charts/d3charts.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/file_upload/DropZone.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/file_upload/DropZone.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/model_build/ModelBuild.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/table/DataTable.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/table/DataTable.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/utils/RestClient.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/utils/RestClient.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -157,11 +143,11 @@
     </configuration>
     <list>
       <item itemvalue="JavaScript Debug.Debug Application" />
-      <item itemvalue="npm.npm start" />
       <item itemvalue="Jest.d3charts" />
       <item itemvalue="Jest.DropzZone.it matches the snapshot" />
       <item itemvalue="Jest.DropZone" />
       <item itemvalue="Jest.DataTable" />
+      <item itemvalue="npm.npm start" />
       <item itemvalue="npm.test" />
     </list>
     <recent_temporary>
@@ -192,6 +178,7 @@
       <workItem from="1575117207320" duration="6992000" />
       <workItem from="1575194890888" duration="6218000" />
       <workItem from="1575212566109" duration="33983000" />
+      <workItem from="1575493476926" duration="1768000" />
     </task>
     <servers />
   </component>
